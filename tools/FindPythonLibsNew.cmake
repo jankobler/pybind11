@@ -167,6 +167,9 @@ list(GET _PYTHON_VALUES 7 PYTHON_LIBRARY_SUFFIX)
 list(GET _PYTHON_VALUES 8 PYTHON_LIBDIR)
 list(GET _PYTHON_VALUES 9 PYTHON_MULTIARCH)
 
+message( STATUS "After command using sysconfig PYTHON_INCLUDE_DIR: ${PYTHON_INCLUDE_DIR}")
+
+
 # Make sure the Python has the same pointer-size as the chosen compiler
 # Skip if CMAKE_SIZEOF_VOID_P is not defined
 if(CMAKE_SIZEOF_VOID_P AND (NOT "${PYTHON_SIZEOF_VOID_P}" STREQUAL "${CMAKE_SIZEOF_VOID_P}"))
@@ -245,6 +248,12 @@ else()
     set(PYTHON_LIBRARY python${PYTHON_LIBRARY_SUFFIX})
   endif()
 endif()
+
+find_package (Python3 COMPONENTS Interpreter Development)
+
+set(PYTHON_INCLUDE_DIR ${Python3_INCLUDE_DIRS})
+message( STATUS "Python3_INCLUDE_DIRS: ${Python3_INCLUDE_DIRS}")
+message( STATUS "After find_package Python3 PYTHON_INCLUDE_DIR: ${PYTHON_INCLUDE_DIR}")
 
 mark_as_advanced(PYTHON_LIBRARY PYTHON_INCLUDE_DIR)
 
